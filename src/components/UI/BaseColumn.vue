@@ -6,16 +6,25 @@
             {{ columnData.title }}
         </h3>
         <BaseCard
-            v-for="card of columnData.cards"
+            v-for="card in columnData.cards"
             :key="card.title"
             :cardData="card"
+            draggable="true"
+            @dragstart="onDragStart($event, card.id)"
         />
     </ul>
 </template>
 
 <script>
 export default {
-    props: ['columnData']
+    props: ['columnData'],
+    methods: {
+        onDragStart(ev, cardId) {
+            ev.dataTransfer.dropEffect = 'move';
+            ev.dataTransfer.effectAllowed = 'move';
+            ev.dataTransfer.setData('cardId', cardId);
+        }
+    }
 }
 </script>
 
