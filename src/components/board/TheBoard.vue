@@ -1,6 +1,6 @@
 <template>
     <main>
-        <BaseColumn
+        <BoardColumn
             v-for="column in boardData"
             :key="column.id" :columnData="column"
             @drop="onDrop($event, column.id)"
