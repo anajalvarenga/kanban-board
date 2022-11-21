@@ -1,9 +1,15 @@
 <template>
     <li>
-        <h4>title</h4>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id inventore optio quia commodi ad.</p>
+        <h4>{{ cardData.title }}</h4>
+        <p>{{ cardData.description }}</p>
     </li>
 </template>
+
+<script>
+export default {
+    props: ['cardData']
+}
+</script>
 
 <style scoped>
 li {

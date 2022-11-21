@@ -1,13 +1,23 @@
 <template>
     <ul>
-        <h3>Title</h3>
-        <BaseCard />
-        <BaseCard />
-        <BaseCard />
-        <BaseCard />
-        <BaseCard />
+        <h3
+            :style="{'background-color': columnData.color}"
+        >
+            {{ columnData.title }}
+        </h3>
+        <BaseCard
+            v-for="card of columnData.cards"
+            :key="card.title"
+            :cardData="card"
+        />
     </ul>
 </template>
+
+<script>
+export default {
+    props: ['columnData']
+}
+</script>
 
 <style scoped>
 ul {
@@ -19,7 +29,6 @@ ul {
 }
 
 h3 {
-    background-color: rgba(95, 158, 160, 1);
     border-radius: 8px;
     color: #fff;
     margin: 4px;
