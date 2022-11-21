@@ -86,6 +86,6 @@ export default {
 main {
     display: flex;
     justify-content: flex-start;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 </style>
