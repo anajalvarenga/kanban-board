@@ -1,13 +1,17 @@
 <template>
     <li>
-        <h4>{{ cardData.title }}</h4>
-        <p>{{ cardData.description }}</p>
+        <slot>
+            <h4 v-if="cardData && cardData.title">{{ cardData.title }}</h4>
+            <p v-if="cardData && cardData.description">{{ cardData.description }}</p>
+        </slot>
     </li>
 </template>
 
 <script>
 export default {
-    props: ['cardData']
+    props: {
+        cardData: { required: false }
+    }
 }
 </script>
 
@@ -17,5 +21,6 @@ li {
     padding: 16px;
     border-radius: 8px;
     margin: 4px;
+    list-style: none;
 }
 </style>
