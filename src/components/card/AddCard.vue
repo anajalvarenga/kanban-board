@@ -1,9 +1,10 @@
 <template>
     <BaseCard class="card">
-        <form class="form-card" @submit.prevent>
+        <form class="form-card" @submit.prevent="onSubmitForm">
             <input
                 type="text"
                 placeholder="Card title"
+                v-model="enteredTitle"
             >
             <textarea
                 name="description"
@@ -11,11 +12,29 @@
                 cols="30"
                 rows="10"
                 placeholder="Card description"
+                v-model="enteredDescription"
             ></textarea>
             <button>Add</button>
         </form>
     </BaseCard>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            enteredTitle: null,
+            enteredDescription:null
+        };
+    },
+    methods: {
+        onSubmitForm() {
+            console.log(this.enteredTitle, this.enteredDescription);
+            console.log(this.cardsAmount)
+        }
+    }
+}
+</script>
 
 <style scoped>
 .card {

@@ -72,6 +72,9 @@ export default {
             return this.columns
         }
     },
+    // created() {
+    //     this.$root
+    // },
     methods: {
         onDrop(ev, columnId) {
             const cardId = ev.dataTransfer.getData('cardId');
