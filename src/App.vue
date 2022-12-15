@@ -1,14 +1,12 @@
 <template>
-  <AddCard />
   <TheBoard />
 </template>
 
 <script>
 import TheBoard from './components/board/TheBoard.vue';
-import AddCard from './components/card/AddCard.vue';
 
 export default {
-    components: { TheBoard, AddCard }
+    components: { TheBoard }
 }
 </script>
 

@@ -23,7 +23,7 @@ export default {
             ev.dataTransfer.dropEffect = 'move';
             ev.dataTransfer.effectAllowed = 'move';
             ev.dataTransfer.setData('cardId', cardId);
-        }
+        },
     }
 }
 </script>
@@ -42,5 +42,15 @@ h3 {
     color: #fff;
     margin: 4px;
     padding: 16px;
+}
+
+button {
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+    border-radius: 8px!important;
+    font-size: 16px;
+    padding: 16px!important;
+    margin: 4px;
 }
 </style>

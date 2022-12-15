@@ -1,4 +1,11 @@
 <template>
+    <BaseDialog v-if="dialogOpen" @close="closeDialog">
+        <AddCard @cardCreated="handleCreatedCard($event)" />
+    </BaseDialog>
+    <header>
+        <h1>kanban board</h1>
+        <BaseButton @click="openDialog">+</BaseButton>
+    </header>
     <main>
         <BoardColumn
             v-for="column in boardData"
@@ -11,7 +18,10 @@
 </template>
 
 <script>
+import AddCard from '../card/AddCard.vue';
+
 export default {
+    components: { AddCard },
     data() {
         return {
             columns: [
@@ -61,7 +71,8 @@ export default {
                     title: 'card 4',
                     description: 'lorem'
                 },
-            ]
+            ],
+            dialogOpen: false,
         };
     },
     computed: {
@@ -72,14 +83,27 @@ export default {
             return this.columns
         }
     },
-    // created() {
-    //     this.$root
-    // },
     methods: {
         onDrop(ev, columnId) {
             const cardId = ev.dataTransfer.getData('cardId');
             const card = this.cards.find(card => card.id == cardId);
             card.columnId = columnId;
+        },
+        openDialog() {
+            this.dialogOpen = true;
+        },
+        closeDialog() {
+            this.dialogOpen = false;
+        },
+        handleCreatedCard(event) {
+            const newCard = {
+                id: this.cards.length,
+                columnId: 0,
+                title: event.cardTitle,
+                description: event.cardDescription
+            };
+            this.cards.push(newCard);
+            this.dialogOpen = false;
         }
     },
 }

@@ -14,13 +14,14 @@
                 placeholder="Card description"
                 v-model="enteredDescription"
             ></textarea>
-            <button>Add</button>
+            <BaseButton>Add</BaseButton>
         </form>
     </BaseCard>
 </template>
 
 <script>
 export default {
+    emits: ['cardCreated'],
     data() {
         return {
             enteredTitle: null,
@@ -30,7 +31,10 @@ export default {
     methods: {
         onSubmitForm() {
             console.log(this.enteredTitle, this.enteredDescription);
-            console.log(this.cardsAmount)
+            this.$emit('cardCreated', {
+                cardTitle: this.enteredTitle,
+                cardDescription: this.enteredDescription
+            });
         }
     }
 }
@@ -38,8 +42,8 @@ export default {
 
 <style scoped>
 .card {
-    width: 25%;
     min-width: 200px;
+    margin: 0;
 }
 
 .form-card {
@@ -71,21 +75,5 @@ textarea {
 
 button {
     align-self: flex-end;
-    background-color: rgba(95, 158, 160, 0.25);
-    border: none;
-    border-radius: 4px;
-    color: rgb(64, 106, 107);
-    cursor: pointer;
-    font-weight: bold;
-    outline: none;
-    padding: 8px;
-}
-
-button:hover {
-    background-color: rgba(95, 158, 160, 0.5);
-}
-
-button:active {
-    background-color: rgba(95, 158, 160, 0.7);
 }
 </style>
