@@ -14,19 +14,29 @@
                 placeholder="Card description"
                 v-model="enteredDescription"
             ></textarea>
-            <BaseButton v-if="buttonVisible">Add</BaseButton>
+            <BaseButton v-if="buttonVisible">{{ buttonTitle }}</BaseButton>
         </form>
     </BaseCard>
 </template>
 
 <script>
 export default {
+    props: ['cardData'],
     emits: ['cardCreated'],
     data() {
         return {
             enteredTitle: '',
             enteredDescription: '',
+            buttonTitle: 'Add',
         };
+    },
+    mounted() {
+        console.log(this.cardData)
+        if(this.cardData) {
+            this.enteredTitle = this.cardData.title;
+            this.enteredDescription = this.cardData.description;
+            this.buttonTitle = 'Edit';
+        }
     },
     computed: {
         buttonVisible() {

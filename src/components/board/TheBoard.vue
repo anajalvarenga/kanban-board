@@ -1,6 +1,6 @@
 <template>
     <BaseDialog v-if="dialogOpen" @close="closeDialog">
-        <AddCard @cardCreated="handleCreatedCard($event)" />
+        <AddCard @cardCreated="cardAction" :cardData="selectedCard" />
     </BaseDialog>
     <header>
         <h1>kanban board</h1>
@@ -13,6 +13,7 @@
             @drop="onDrop($event, column.id)"
             @dragover.prevent
             @dragenter.prevent
+            @cardSelected="editCard"
         />
     </main>
 </template>
@@ -73,6 +74,7 @@ export default {
                 },
             ],
             dialogOpen: false,
+            selectedCard: null,
         };
     },
     computed: {
@@ -81,6 +83,12 @@ export default {
                 column.cards = this.cards.filter(card => card.columnId === column.id)
             }
             return this.columns
+        },
+        cardAction() {
+            if(this.selectedCard) {
+                return ($event) => this.handleEditedCard($event);
+            }
+            return ($event) => this.handleCreatedCard($event);
         }
     },
     methods: {
@@ -94,6 +102,7 @@ export default {
         },
         closeDialog() {
             this.dialogOpen = false;
+            this.selectedCard = null;
         },
         handleCreatedCard(event) {
             const newCard = {
@@ -104,7 +113,22 @@ export default {
             };
             this.cards.push(newCard);
             this.dialogOpen = false;
-        }
+        },
+        editCard(cardId) {
+            this.selectedCard = this.cards[cardId];
+            this.dialogOpen = true;
+        },
+        handleEditedCard(event) {
+            const editedCard = {
+                id: this.selectedCard.id,
+                columnId: this.selectedCard.columnId,
+                title: event.cardTitle,
+                description: event.cardDescription
+            };
+            this.cards[this.selectedCard.id] = editedCard;
+            this.selectedCard = null;
+            this.dialogOpen = false;
+        },
     },
 }
 </script>

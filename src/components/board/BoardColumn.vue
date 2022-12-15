@@ -11,6 +11,7 @@
             :cardData="card"
             draggable="true"
             @dragstart="onDragStart($event, card.id)"
+            @click="onSelectCard(card.id)"
         />
     </ul>
 </template>
@@ -18,12 +19,16 @@
 <script>
 export default {
     props: ['columnData'],
+    emits: ['cardSelected'],
     methods: {
         onDragStart(ev, cardId) {
             ev.dataTransfer.dropEffect = 'move';
             ev.dataTransfer.effectAllowed = 'move';
             ev.dataTransfer.setData('cardId', cardId);
         },
+        onSelectCard(cardId) {
+            this.$emit('cardSelected', cardId);
+        }
     }
 }
 </script>
