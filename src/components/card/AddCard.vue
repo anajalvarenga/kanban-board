@@ -14,7 +14,7 @@
                 placeholder="Card description"
                 v-model="enteredDescription"
             ></textarea>
-            <BaseButton>Add</BaseButton>
+            <BaseButton v-if="buttonVisible">Add</BaseButton>
         </form>
     </BaseCard>
 </template>
@@ -24,9 +24,14 @@ export default {
     emits: ['cardCreated'],
     data() {
         return {
-            enteredTitle: null,
-            enteredDescription:null
+            enteredTitle: '',
+            enteredDescription: '',
         };
+    },
+    computed: {
+        buttonVisible() {
+            return (this.enteredTitle !== '' && this.enteredDescription !== '');
+        }
     },
     methods: {
         onSubmitForm() {
