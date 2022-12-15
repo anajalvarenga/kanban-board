@@ -1,6 +1,6 @@
 <template>
     <BaseDialog v-if="dialogOpen" @close="closeDialog">
-        <AddCard @cardCreated="cardAction" :cardData="selectedCard" />
+        <AddCard @cardCreated="cardAction" @deleteCard="handleDeleteCard" :cardData="selectedCard" />
     </BaseDialog>
     <header>
         <h1>kanban board</h1>
@@ -75,7 +75,11 @@ export default {
             ],
             dialogOpen: false,
             selectedCard: null,
+            nextIdCard: null,
         };
+    },
+    mounted() {
+        this.nextIdCard = this.cards.length;
     },
     computed: {
         boardData() {
@@ -106,7 +110,7 @@ export default {
         },
         handleCreatedCard(event) {
             const newCard = {
-                id: this.cards.length,
+                id: this.nextIdCard++,
                 columnId: 0,
                 title: event.cardTitle,
                 description: event.cardDescription
@@ -115,7 +119,7 @@ export default {
             this.dialogOpen = false;
         },
         editCard(cardId) {
-            this.selectedCard = this.cards[cardId];
+            this.selectedCard = this.cards.find(card => card.id == cardId);
             this.dialogOpen = true;
         },
         handleEditedCard(event) {
@@ -125,7 +129,14 @@ export default {
                 title: event.cardTitle,
                 description: event.cardDescription
             };
-            this.cards[this.selectedCard.id] = editedCard;
+            const index = this.cards.findIndex(card => card.id === this.selectedCard.id);
+
+            this.cards[index] = editedCard;
+            this.selectedCard = null;
+            this.dialogOpen = false;
+        },
+        handleDeleteCard() {
+            this.cards = this.cards.filter(card => card.id !== this.selectedCard.id);
             this.selectedCard = null;
             this.dialogOpen = false;
         },

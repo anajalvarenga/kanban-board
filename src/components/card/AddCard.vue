@@ -14,7 +14,14 @@
                 placeholder="Card description"
                 v-model="enteredDescription"
             ></textarea>
-            <BaseButton v-if="buttonVisible">{{ buttonTitle }}</BaseButton>
+            <div class="d-flex-end">
+                <BaseButton
+                    type="button"
+                    v-if="buttonTitle === 'Edit'"
+                    @click="onDelete"
+                >delete</BaseButton>
+                <BaseButton v-if="buttonVisible">{{ buttonTitle }}</BaseButton>
+            </div>
         </form>
     </BaseCard>
 </template>
@@ -22,7 +29,7 @@
 <script>
 export default {
     props: ['cardData'],
-    emits: ['cardCreated'],
+    emits: ['cardCreated', 'deleteCard'],
     data() {
         return {
             enteredTitle: '',
@@ -31,7 +38,6 @@ export default {
         };
     },
     mounted() {
-        console.log(this.cardData)
         if(this.cardData) {
             this.enteredTitle = this.cardData.title;
             this.enteredDescription = this.cardData.description;
@@ -50,6 +56,9 @@ export default {
                 cardTitle: this.enteredTitle,
                 cardDescription: this.enteredDescription
             });
+        },
+        onDelete() {
+            this.$emit('deleteCard');
         }
     }
 }
@@ -88,7 +97,11 @@ textarea {
     resize: none;
 }
 
-button {
-    align-self: flex-end;
+.d-flex-end {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
 }
+
 </style>
