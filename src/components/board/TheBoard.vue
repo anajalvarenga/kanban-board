@@ -110,6 +110,22 @@ export default {
 </script>
 
 <style scoped>
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    background-color: #541fc4;
+    margin: 0 12px 8px 12px;
+    padding: 0 16px;
+    border-radius: 8px;
+}
+
+button {
+    color: #fff!important;
+    font-size: 1rem;
+}
+
 main {
     display: flex;
     justify-content: flex-start;
